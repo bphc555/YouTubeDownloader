@@ -1,10 +1,14 @@
+from __future__ import unicode_literals
+import youtube_dl
 import re
 import requests
 import urllib
 from urllib import urlopen
 
+playlist = []
+
 def getList(url):
-	playlist = []
+	global playlist
 	temp = set()
 	page = requests.get(url)
 	if (page.status_code == 404):
@@ -25,6 +29,25 @@ def getList(url):
 			vidId = u[:index]
 			temp.add('http://www.youtube.com/' + vidId)
 	for addrs in temp:
-		print addrs	
+		print addrs
+		playlist.append(addrs)	
+
+
+def my_hook(d):
+	if d['status'] == 'error':
+		print "Sorry an error occured"
+	elif d['status'] == 'finished':
+		print "Download Successfully finished"
+
+ydl_opts = {
+	'progress_hooks' :[my_hook]}
+
+def download():
+	print "The following videos will be downloaded:"
+	for string in playlist:
+		print string 
+	#with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+	#	ydl.download([url])
 
 getList('https://www.youtube.com/playlist?list=PLwgprUN2IFAtT_33QCrsPh6wzqwF88YqW')
+download()	
