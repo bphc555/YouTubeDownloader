@@ -1,0 +1,14 @@
+#!/bin/bash
+#script to install all libraries required by downloader
+echo "Installing following libraries"
+echo "    ->pip"
+echo "    ->requests"
+echo "    ->youtube-dl"
+sudo apt-get install python-pip
+echo "-----------------Installed python pip-----------------"
+pip install requests
+echo "-----------------Installed requests-----------------"
+sudo pip install --upgrade youtube-dl
+echo "-----------------Installed youtube-dl-----------------"
+echo "Get, set and go!! "
+
