@@ -3,6 +3,7 @@ import youtube_dl
 import re
 import requests
 import urllib
+import os
 from urllib import urlopen
 
 playlist = []
@@ -18,9 +19,11 @@ def getList(url):
 	#get the playlist id
 	index = url.rfind('=')
 	listId = url[index+1:]
-	#now find re /watch?v= & listId
-	#href of a link is href="/watch?v=BWRQAbxriH8&amp;index=5&amp;list=PLwgprUN2IFAtT_33QCrsPh6wzqwF88YqW"
-	#i.e. /watch?v= + some random string which is not \n or \t or \r etc + list = playlist id of playlist.	
+	"""
+	now find re /watch?v= & listId
+	href of a link is href="/watch?v=BWRQAbxriH8&amp;index=5&amp;list=PLwgprUN2IFAtT_33QCrsPh6wzqwF88YqW"
+	i.e. /watch?v= + some random string which is not \n or \t or \r etc + list = playlist id of playlist.	
+	"""
 	toFind = re.compile('watch\?v=\S+list=' + listId)
 	matches = re.findall(toFind,string)
 	if matches:
@@ -49,5 +52,24 @@ def download():
 	#with youtube_dl.YoutubeDL(ydl_opts) as ydl:
 	#	ydl.download([url])
 
-getList('https://www.youtube.com/playlist?list=PLwgprUN2IFAtT_33QCrsPh6wzqwF88YqW')
-download()	
+def getUrl():
+	print "Enter your playlist"
+	url = raw_input()
+	url = 'https://www.youtube.com/playlist?list=PLwgprUN2IFAtT_33QCrsPh6wzqwF88YqW'
+	if 'list' in url: 	#verify if url is a playlist or not
+		print "ok downloading videos"
+	else:
+		print "Please give a valid url of playlist"
+	getList(url)
+
+def getDir():
+	print "Specify your download directory"
+	myDownloadDir = raw_input()
+	print myDownloadDir
+	os.chdir(myDownloadDir) #check for valid path if future
+	print "Your videos will be stored in " + myDownloadDir
+	getUrl()
+
+
+if __name__ == "__main__":
+	getDir()
