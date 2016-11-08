@@ -94,6 +94,7 @@ def getDir():
 	os.chdir(myDownloadDir) 
 	print "Your videos will be stored in " + myDownloadDir
 	getUrl()
+	#allow user to continue downloading
 	while(True):	
 		print "Do you want to continue? Yes - y/Y, No n/N"
 		choice = raw_input()
