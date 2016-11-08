@@ -16,7 +16,7 @@ def getList(url):
 	except requests.exceptions.RequestException as e:
 		print "OOps ! error"		
 		print e
-		sys.exit(1)
+		#sys.exit(1)
 	if (page.status_code == 404):
 		print "404 client error"
 	html = urlopen(url).read()
@@ -43,7 +43,8 @@ def getList(url):
 		fileOfLink.write(addrs)
 		fileOfLink.write("\n")
 	fileOfLink.close()
-	download()	
+	download()
+	return	
 
 # method specific to youtube-dl to download videos
 def my_hook(d):
@@ -63,8 +64,10 @@ def download():
 	for line in fileOfLink:
 		print line
 		with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-			ydl.download([line])
-		
+			#ydl.download([line])
+			print "downloading"
+	return
+
 #get url of playlist from user, verify if it is a list
 def getUrl():
 	print "Enter your playlist"
@@ -75,6 +78,8 @@ def getUrl():
 	else:
 		print "Please give a valid url of playlist"
 	getList(url)
+	return
+		
 
 #to set the directory where user wants to store videos
 def getDir():
@@ -84,6 +89,14 @@ def getDir():
 	os.chdir(myDownloadDir) #check for valid path in future
 	print "Your videos will be stored in " + myDownloadDir
 	getUrl()
+	while(True):	
+		print "Do you want to continue? Yes - y/Y, No n/N"
+		choice = raw_input()
+		if((choice[0] == 'Y') or (choice[0] == 'y')):
+			getUrl()
+		else:
+			sys.exit(1)
+	
 
 
 if __name__ == "__main__":
