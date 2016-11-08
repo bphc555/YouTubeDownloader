@@ -4,6 +4,7 @@ import re
 import requests
 import urllib
 import os
+import sys
 from urllib import urlopen
 
 
@@ -15,7 +16,7 @@ def getList(url):
 	except requests.exceptions.RequestException as e:
 		print "OOps ! error"		
 		print e
-		sysexit(1)
+		sys.exit(1)
 	if (page.status_code == 404):
 		print "404 client error"
 	html = urlopen(url).read()
