@@ -72,12 +72,12 @@ def download():
 def getUrl():
 	print "Enter your playlist"
 	url = raw_input()
-	url = 'https://www.youtube.com/playlist?list=PLwgprUN2IFAtT_33QCrsPh6wzqwF88YqW'
+	# eg: url = 'https://www.youtube.com/playlist?list=PLwgprUN2IFAtT_33QCrsPh6wzqwF88YqW'
 	if 'list' in url: 	#verify if url is a playlist or not
 		print "ok downloading videos"
+		getList(url)
 	else:
-		print "Please give a valid url of playlist"
-	getList(url)
+		print "Please enter url of a playlist."
 	return
 		
 
@@ -85,8 +85,13 @@ def getUrl():
 def getDir():
 	print "Specify your download directory"
 	myDownloadDir = raw_input()
-	print myDownloadDir
-	os.chdir(myDownloadDir) #check for valid path in future
+	#check for valid path
+	if( os.path.isdir(myDownloadDir) == False):
+		print "No such folder exists. Please give a valid path"
+		sys.exit(1)
+
+	print "Your files will be downloaded to %s" %myDownloadDir
+	os.chdir(myDownloadDir) 
 	print "Your videos will be stored in " + myDownloadDir
 	getUrl()
 	while(True):	
