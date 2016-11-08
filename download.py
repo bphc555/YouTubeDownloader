@@ -10,7 +10,12 @@ from urllib import urlopen
 #parse the playlist url to get list of videos' links. Store the links in a file.
 def getList(url):
 	playlist = set()
-	page = requests.get(url)
+	try:
+		page = requests.get(url)
+	except requests.exceptions.RequestException as e:
+		print "OOps ! error"		
+		print e
+		sysexit(1)
 	if (page.status_code == 404):
 		print "404 client error"
 	html = urlopen(url).read()
