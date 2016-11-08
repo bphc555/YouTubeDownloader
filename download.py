@@ -64,8 +64,8 @@ def download():
 	for line in fileOfLink:
 		print line
 		with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-			#ydl.download([line])
-			print "downloading"
+			ydl.download([line])
+			#print "downloading"
 	return
 
 #get url of playlist from user, verify if it is a list
